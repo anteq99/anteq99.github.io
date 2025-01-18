@@ -60,11 +60,15 @@ let header = document.querySelector("header");
     }
     function w(){
         setTimeout(function(){
-        alert("WYGRAŁÆŚ")},1000)
+        alert("WYGRAŁÆŚ")
+        game();
+        },1000)
     }
     function l(){
         setTimeout(function(){
-            alert("PRZEGRAŁÆŚ")},1000)
+            alert("PRZEGRAŁÆŚ")
+            game();
+        },1000)
     }
     function compare(){
         if(dealer[1]-dealer[2]*10 > player[1]-player[2]*10){
@@ -145,7 +149,6 @@ let header = document.querySelector("header");
                 }
                 if(angle==0){
                     clearInterval(int)
-                    
                 }
             }
         ,20)
