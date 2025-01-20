@@ -61,13 +61,11 @@ let header = document.querySelector("header");
     function w(){
         setTimeout(function(){
         alert("WYGRAŁÆŚ")
-        game();
         },1000)
     }
     function l(){
         setTimeout(function(){
             alert("PRZEGRAŁÆŚ")
-            game();
         },1000)
     }
     function compare(){
