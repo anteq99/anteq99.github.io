@@ -1,83 +1,93 @@
+
 html, body{
-            font-family: cursive;
-            width: 100vw;
-            height:100vh;
-            margin: 0;
-            padding: 0;
-            background-color: green;
-        }
-        header{
-            max-width: 50vw;
-            margin: auto;
-            text-align: center;
-            font-size: 7vw;
-            font-weight: bold;
-        }
-        #play, #betaccept{
-            color: white;
-            font-weight: bold;
-            font-size: 5vw;
-            margin: auto;
-            border: 0.3vw solid white;
-            width: 20vw;
-            text-align: center;
-        }
-        #play:hover{
-            color: green;
-            background-color: white;
-        }
-        .card{
-            width: 6vw;
-            height: 9vw;
-            background-size: 100%;
-            position: relative;
-            background-image: url(cards/back.png);
-            font-size: 0px;
-        }
-        #dealer,#player{
-            width: 72vw;
-            height: 9vw;
-            position: absolute;
-            display: flex;
-        }
-        #dealer{
-            left: 28vw;
-            top: 1vw;
-        }
-        #player{
-            left: 28vw;
-            bottom: 1vw;
-        }
-        #betmoney{
-            font-weight: bold;
-            font-size: 5vw;
-            margin: auto;
-            width: 20vw;
-            height: 5vw;
-            text-align: center;
-            display: none;
-        }
-        #hit{
-            background-color: cyan;
-            font-weight: bold;
-            font-size: 2vw;
-            margin: auto;
-            width: 8vw;
-            text-align: center;
-            position: absolute;
-            bottom: 33vh;
-            left: 33vw;
-            display: none;
-        }
-        #stand{
-            background-color: rgb(255, 0, 0);
-            font-weight: bold;
-            font-size: 2vw;
-            margin: auto;
-            width: 10vw;
-            text-align: center;
-            position: absolute;
-            bottom: 33vh;
-            right: 33vw;
-            display: none;
-        }
+    font-family: cursive;
+    width: 100vw;
+    height:100vh;
+    margin: 0;
+    padding: 0;
+    background-color: green;
+}
+header{
+    margin: auto;
+    text-align: center;
+    font-size: 7vw;
+    font-weight: bold;
+    box-shadow: inset 0px 0px 20px 10px black;
+    color: black;
+    border-radius: 50vw;
+}
+#play{
+    color: black;
+    font-weight: bold;
+    font-size: 5vw;
+    margin: auto;
+    border: 0.3vw solid black;
+    width: 20vw;
+    text-align: center;
+}
+#betaccept{
+    display: none;
+    height: 5vw;
+    width: 8vw;
+    font-size: 4vw;
+    background-color: darkgreen;
+}
+#play:hover{
+    color: white;
+}
+.card{
+    width: 8vw;
+    height: 12vw;
+    background-size: 100%;
+    position: relative;
+    background-image: url(cards/back.png);
+    font-size: 0px;
+    border-radius: 7%;
+}
+#dealer,#player{
+    width: 72vw;
+    height: 12vw;
+    position: absolute;
+    display: flex;
+}
+#dealer{
+    left: 28vw;
+    top: 1vw;
+}
+#player{
+    left: 28vw;
+    bottom: 1vw;
+}
+#betbar{
+    font-weight: bold;
+    font-size: 5vw;
+    width: 20vw;
+    height: 5vw;
+    text-align: center;
+    display: none;
+    border: 0px;
+}
+#hit{
+    background-color: cyan;
+    font-weight: bold;
+    font-size: 2vw;
+    margin: auto;
+    width: 8vw;
+    text-align: center;
+    position: absolute;
+    bottom: 33vh;
+    left: 33vw;
+    display: none;
+}
+#stand{
+    background-color: rgb(255, 0, 0);
+    font-weight: bold;
+    font-size: 2vw;
+    margin: auto;
+    width: 10vw;
+    text-align: center;
+    position: absolute;
+    bottom: 33vh;
+    right: 33vw;
+    display: none;
+}
