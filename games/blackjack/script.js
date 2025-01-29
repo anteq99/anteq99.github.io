@@ -34,7 +34,8 @@ stand.addEventListener("click",function(){
 })
 betAccept.addEventListener("click",function(){
     let temp = parseInt(betBar.value)
-    if(temp <= money){
+    console.log(temp)
+    if(temp <= money && temp > 0){
         betMoney = temp;
         header.style.setProperty("display","none")
         betAccept.style.setProperty("display","none")
@@ -67,29 +68,27 @@ function game(){
 }
 function standed(){
     draw(dealer)
-    let dpts = dealer[1];
-    let ppts = player[1];
-    while(dpts>21 && dealer[2] > 0){
-        dpts -= 10;
+    while(dealer[1]>21 && dealer[2] > 0){
+        dealer[1] -= 10;
         dealer[2] -=1;
     }
-    while(ppts>21 && player[2] > 0){
-        ppts -= 10;
+    while(player[1]>21 && player[2] > 0){
+        player[1] -= 10;
         player[2] -=1;
     }
-    console.log(dpts,ppts);
+    console.log(dealer[1],player[1]);
     setTimeout(function(){
-        if(dpts >= 17){
+        if(dealer[1] >= 17){
             if(ifBusted(dealer)){
                 end("w")
             }else{
-                if(dpts > ppts){
+                if(dealer[1] > player[1]){
                     end("l");
                 }
-                if(dpts < ppts){
+                if(dealer[1] < player[1]){
                     end("w");
                 }
-                if(dpts == ppts){
+                if(dealer[1] == player[1]){
                     end("d");
                 }
             }
