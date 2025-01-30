@@ -42,6 +42,9 @@ betAccept.addEventListener("click",function(){
         betBar.style.setProperty("display","none")
         game()
     }
+    if(money == 0 && temp == -69){
+        localStorage.setItem("money", "1000")
+    }
 })
 //---------------------------------------
 function game(){
