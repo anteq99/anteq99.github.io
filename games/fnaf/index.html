@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTEQ99 - STRONA INTERNETOWA DLA SIGMY</title>
+    <style>
+        html, body{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: black;
+        }
+        #bg{
+            margin: auto;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            background-size: cover;
+        }
+        #warning{
+            width: 46.5vw;
+            height: 12.4vw;
+            position: absolute;
+            left: 25vw;
+            top: 40vh;
+            background-image: url(graphics/warning.png);
+            background-size: cover;
+            opacity: 0%;
+            animation: warnAnim 5s;
+        }
+        @keyframes warnAnim{
+            0%{opacity: 0%;}
+            50%{opacity: 100%;}
+            100%{opacity: 0%;}
+        }
+        #cmrglitch{
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-image: url(graphics/cmrglitch.gif);
+            opacity: 0%;
+        }
+    </style>
+</head>
+<body>
+<div id="bg">
+    <div id="warning"></div>
+    <div id="cmrglitch"></div>
+</div>
 
+<audio id="fanbuzz">
+    <source src="Buzz_Fan_Florescent2.ogg" type="audio/ogg">
+</audio>
+
+<script defer>
+    let bg = document.querySelector("#bg");
+    let warning = document.querySelector("#warning"); 
+    let cmrglitch = document.querySelector("#cmrglitch"); 
+    function loading(){
+
+    }
+    function mainmenu(){
+        bg.style.setProperty("background-image","url(graphics/menu/1.png)");
+        cmrglitch.style.setProperty("opacity","50%");
+        freddyAnim();
+    }
+    function freddyAnim(){
+        let opacity = window.getComputedStyle(cmrglitch).getPropertyValue("opacity");
+        if(opacity==0.5){
+            let rand = parseInt(Math.random()*2);
+            if(rand){
+                bg.style.setProperty("background-image","url(graphics/menu/2.png)");
+                setTimeout(() =>{
+                    bg.style.setProperty("background-image","url(graphics/menu/1.png)");
+                },500)
+            }
+            else{
+                bg.style.setProperty("background-image","url(graphics/menu/3a.png)");
+                setTimeout(() =>{
+                    bg.style.setProperty("background-image","url(graphics/menu/3b.png)");
+                },500)
+                setTimeout(() =>{
+                    bg.style.setProperty("background-image","url(graphics/menu/1.png)");
+                },600)
+            }
+            setTimeout(() =>{
+                freddyAnim();
+            },parseInt(Math.random()*5000))
+        }
+        
+        
+    }
+    warning.addEventListener("animationend",function(){
+        setTimeout(() => {
+            mainmenu();
+        }, 2000);
+        
+    })
+</script>
+
+</body>
+</html>
