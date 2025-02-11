@@ -6,8 +6,6 @@
     <title>ANTEQ99 - STRONA INTERNETOWA DLA SIGMY</title>
     <style>
         html, body{
-            width: 100%;
-            height: 100%;
             padding: 0;
             margin: 0;
             background-color: black;
@@ -18,15 +16,13 @@
             height: 100vh;
             background-color: black;
             background-size: cover;
+            display: none;
         }
         #warning{
-            width: 46.5vw;
-            height: 12.4vw;
-            position: absolute;
-            left: 25vw;
-            top: 40vh;
+            width: 465px;
+            height: 124px;
+            margin: 20% auto auto auto;
             background-image: url(graphics/warning.png);
-            background-size: cover;
             opacity: 0%;
             animation: warnAnim 5s;
         }
@@ -36,35 +32,133 @@
             100%{opacity: 0%;}
         }
         #cmrglitch{
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-image: url(graphics/cmrglitch.gif);
             opacity: 0%;
         }
+        #menu{
+            margin-left: 200px;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+            display: none;
+        }
+        #fnaf{
+            margin-top: 5vh;
+            width: 201px;
+            height: 212px;
+            background-image: url(graphics/menu/name.png);
+        }
+        #stars{
+            width: 201px;
+            height: 55px;
+            display: flex;
+        }
+        .star{
+            margin: 5px;
+            width: 57px;
+            height: 55px;
+            background-image: url(graphics/menu/star.png);
+        }
+        #modes > div{
+            margin: 50px 0 50px 0;
+        }
+        #newgame{
+            width: 203px;
+            height: 33px;
+            background-image: url(graphics/menu/newgame.png);
+        }
+        #continue{
+            width: 204px;
+            height: 34px;
+            background-image: url(graphics/menu/continue.png);
+        }
+        #sixnight{
+            width: 227px;
+            height: 44px;
+            background-image: url(graphics/menu/sixnight.png);
+        }
+        #cnight{
+            width: 306px;
+            height: 44px;
+            background-image: url(graphics/menu/cnight.png);
+        }
+        #pointer{
+            width: 43px;
+            height: 26px;
+            background-image: url(graphics/menu/pointer.png);
+            margin-left: -75px;
+        }
     </style>
 </head>
 <body>
+<div id="warning"></div>
 <div id="bg">
-    <div id="warning"></div>
     <div id="cmrglitch"></div>
+    <div id="menu">
+        <div id="fnaf"></div>
+        <div id="stars"></div>
+        <section id="modes">
+            <div id="newgame"></div>
+        <div id="continue"></div>
+        <div id="sixnight"></div>
+        <div id="cnight"><div id="pointer"></div></div>
+        </section>
+    </div>
 </div>
 
-<audio id="fanbuzz">
-    <source src="Buzz_Fan_Florescent2.ogg" type="audio/ogg">
-</audio>
+<audio id="menutheme" src="sounds/darkness music.wav" loop></audio>
 
 <script defer>
     let bg = document.querySelector("#bg");
     let warning = document.querySelector("#warning"); 
     let cmrglitch = document.querySelector("#cmrglitch"); 
+    let menu = document.querySelector("#menu");
+    let menuName = document.querySelector("#fnaf");
+    let stars = document.querySelector("#stars");
+    let modes = document.querySelector("#modes").querySelectorAll("div");
+    // sounds
+    let menuTheme = document.querySelector("#menutheme");
+    // variables
+    if(localStorage.getItem("stars") == null){
+        localStorage.setItem("stars","0");
+    }
+    let starCount = localStorage.getItem("stars");
+    if(localStorage.getItem("night") == null){
+        localStorage.setItem("night","1");
+    }
+    let nightNumb = localStorage.getItem("night");
+
     function loading(){
 
     }
+
+    warning.addEventListener("animationend",function(){
+        warning.style.setProperty("display","none");
+        bg.style.setProperty("display","block");
+        setTimeout(() => {
+            mainmenu();
+        }, 2000);
+        
+    })
+
     function mainmenu(){
-        bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-        cmrglitch.style.setProperty("opacity","50%");
-        freddyAnim();
+        setTimeout(() => {
+            bg.style.setProperty("background-image","url(graphics/menu/1.png)");
+            cmrglitch.style.setProperty("opacity","50%");
+            menu.style.setProperty("display","block");
+            menuhover();
+            for(let i = 0;i<3;i++){
+                let temp = document.createElement("div");
+                temp.classList.add("star");
+                stars.appendChild(temp);
+            }
+            freddyAnim();
+        }, 1000);
+        menuTheme.load();
+        menuTheme.play();
     }
     function freddyAnim(){
         let opacity = window.getComputedStyle(cmrglitch).getPropertyValue("opacity");
@@ -74,30 +168,30 @@
                 bg.style.setProperty("background-image","url(graphics/menu/2.png)");
                 setTimeout(() =>{
                     bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-                },500)
+                },100)
             }
             else{
                 bg.style.setProperty("background-image","url(graphics/menu/3a.png)");
                 setTimeout(() =>{
                     bg.style.setProperty("background-image","url(graphics/menu/3b.png)");
-                },500)
+                },100)
                 setTimeout(() =>{
                     bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-                },600)
+                },110)
             }
             setTimeout(() =>{
                 freddyAnim();
-            },parseInt(Math.random()*5000))
-        }
-        
-        
+            },parseInt(Math.random()*4000))
+        } 
     }
-    warning.addEventListener("animationend",function(){
-        setTimeout(() => {
-            mainmenu();
-        }, 2000);
-        
-    })
+    function menuhover(){
+        for(let i = 0;i<modes.length;i++){
+            modes[i].addEventListener("mouseenter",function(){
+                let pointer = document.querySelector("#pointer");
+                modes[i].appendChild(pointer);
+            });
+        }
+    }
 </script>
 
 </body>
