@@ -6,8 +6,8 @@ let betBar = document.querySelector("#betbar")
 let betAccept = document.querySelector("#betaccept")
 let hit = document.querySelector("#hit");
 let stand = document.querySelector("#stand");
-if(localStorage.getItem("money") == null){
-    localStorage.setItem("money", "1000")
+if(localStorage.getItem("cassino_money") == null){
+    localStorage.setItem("cassino_money", "1000")
 }
 let betMoney = 0;
 let deck = [];
@@ -15,7 +15,7 @@ let dealer, player, money;
 //---------------------------------------
 play.addEventListener("click", function(){
     play.style.setProperty("display","none");
-    money = localStorage.getItem("money");
+    money = localStorage.getItem("cassino_money");
     dealer = [main.querySelector("#dealer"),0,0] // html,value of cards, number of aces
     player = [main.querySelector("#player"),0,0]
     bet();
@@ -43,7 +43,7 @@ betAccept.addEventListener("click",function(){
         game()
     }
     if(money == 0 && temp == -69){
-        localStorage.setItem("money", "1000")
+        localStorage.setItem("cassino_money", "1000")
     }
 })
 //---------------------------------------
@@ -106,13 +106,13 @@ function end(wl){
     if(wl=="w"){
         setTimeout(function(){
             alert("WYGRANA")
-            localStorage.setItem("money",parseInt(money)+parseInt(betMoney))
+            localStorage.setItem("cassino_money",parseInt(money)+parseInt(betMoney))
         },1000)
     }
     if(wl=="l"){
         setTimeout(function(){
             alert("PRZEGRANA")
-            localStorage.setItem("money",money-betMoney)
+            localStorage.setItem("cassino_money",money-betMoney)
         },1000)
     }
     if(wl=="d"){
