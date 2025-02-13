@@ -9,6 +9,7 @@
             padding: 0;
             margin: 0;
             background-color: black;
+            overflow: hidden;
         }
         #bg{
             margin: auto;
@@ -24,19 +25,39 @@
             margin: 20% auto auto auto;
             background-image: url(graphics/warning.png);
             opacity: 0%;
-            animation: warnAnim 5s;
         }
-        @keyframes warnAnim{
+        @keyframes appear{
             0%{opacity: 0%;}
             50%{opacity: 100%;}
             100%{opacity: 0%;}
         }
-        #cmrglitch{
+        #static{
             width: 100%;
             height: 100%;
             background-size: cover;
-            background-image: url(graphics/cmrglitch.gif);
+            background-image: url(graphics/static.gif);
             opacity: 0%;
+        }
+        #cmrglitch{
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            opacity: 0%;
+        }
+        #glitchbar{
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            height: 50px;
+            background-color: white;
+            opacity: 20%;
+            animation: goingdown 20s linear 2s infinite ;
+        }
+        @keyframes goingdown{
+            0%{top: -50px;}
+            100%{top: 100%}
         }
         #menu{
             margin-left: 200px;
@@ -52,15 +73,10 @@
             background-image: url(graphics/menu/name.png);
         }
         #stars{
-            width: 201px;
-            height: 55px;
-            display: flex;
-        }
-        .star{
-            margin: 5px;
-            width: 57px;
+            width: 0px;
             height: 55px;
             background-image: url(graphics/menu/star.png);
+            background-repeat: space;
         }
         #modes > div{
             margin: 50px 0 50px 0;
@@ -79,11 +95,13 @@
             width: 227px;
             height: 44px;
             background-image: url(graphics/menu/sixnight.png);
+            display: none;
         }
         #cnight{
             width: 306px;
             height: 44px;
             background-image: url(graphics/menu/cnight.png);
+            display: none;
         }
         #pointer{
             width: 43px;
@@ -91,12 +109,15 @@
             background-image: url(graphics/menu/pointer.png);
             margin-left: -75px;
         }
+
     </style>
 </head>
 <body>
 <div id="warning"></div>
 <div id="bg">
+    <div id="static"></div>
     <div id="cmrglitch"></div>
+    <div id="glitchbar"></div>
     <div id="menu">
         <div id="fnaf"></div>
         <div id="stars"></div>
@@ -114,7 +135,8 @@
 <script defer>
     let bg = document.querySelector("#bg");
     let warning = document.querySelector("#warning"); 
-    let cmrglitch = document.querySelector("#cmrglitch"); 
+    let static = document.querySelector("#static"); 
+    let cmrglitch = document.querySelector("#cmrglitch");
     let menu = document.querySelector("#menu");
     let menuName = document.querySelector("#fnaf");
     let stars = document.querySelector("#stars");
@@ -122,47 +144,45 @@
     // sounds
     let menuTheme = document.querySelector("#menutheme");
     // variables
-    if(localStorage.getItem("stars") == null){
-        localStorage.setItem("stars","0");
+    if(localStorage.getItem("night") == null){
+        localStorage.setItem("night","1");
     }
-    let starCount = localStorage.getItem("stars");
-    if(localStorage.getItem("fnaf1_night") == null){
-        localStorage.setItem("fnaf1_night","1");
-    }
-    let nightNumb = localStorage.getItem("fnaf1_night");
-
+    let curnight = localStorage.getItem("night");
+    warning.style.setProperty("animation", "appear 5s")
     function loading(){
-
     }
-
     warning.addEventListener("animationend",function(){
         warning.style.setProperty("display","none");
         bg.style.setProperty("display","block");
+        if(curnight>=5){
+            stars.style.setProperty("width",(70*(curnight-5))+"px");
+        }
+        switch(curnight){
+            case 8:
+            case 7: document.querySelector("#cnight").style.setProperty("display","block");
+            case 6: document.querySelector("#sixnight").style.setProperty("display","block"); 
+        }
         setTimeout(() => {
             mainmenu();
         }, 2000);
-        
     })
 
     function mainmenu(){
         setTimeout(() => {
             bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-            cmrglitch.style.setProperty("opacity","50%");
+            static.style.setProperty("opacity","50%");
             menu.style.setProperty("display","block");
-            menuhover();
-            for(let i = 0;i<3;i++){
-                let temp = document.createElement("div");
-                temp.classList.add("star");
-                stars.appendChild(temp);
-            }
+            cmrglitch.style.setProperty("opacity","20%");
             freddyAnim();
+            menuhover();
+            cmrglitches();
         }, 1000);
-        menuTheme.load();
-        menuTheme.play();
+        //menuTheme.load();
+        //menuTheme.play();
     }
     function freddyAnim(){
-        let opacity = window.getComputedStyle(cmrglitch).getPropertyValue("opacity");
-        if(opacity==0.5){
+        let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
+        if(ifmenu){
             let rand = parseInt(Math.random()*2);
             if(rand){
                 bg.style.setProperty("background-image","url(graphics/menu/2.png)");
@@ -191,6 +211,21 @@
                 modes[i].appendChild(pointer);
             });
         }
+    }
+    function cmrglitches(){
+        let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
+        if(ifmenu){
+            let glitch = parseInt(Math.random()*40+1);
+            if(glitch <= 15){
+                cmrglitch.style.setProperty("background-image",`url(graphics/cmrglitch/${glitch}.png)`);
+            }
+            else{
+                cmrglitch.style.setProperty("background-image",`none`);
+            }
+            setTimeout(() =>{
+                cmrglitches();
+            },parseInt(Math.random()*200+300))
+        } 
     }
 </script>
 
