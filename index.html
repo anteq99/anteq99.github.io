@@ -55,5 +55,21 @@
     </footer>
 </body>
 <script>
+    let lStoreCorrect = ["cassino_money","fnaf_nights"];
+    if(localStorage.length > lStoreCorrect.length){
+        for(let i = 0;i<localStorage.length;i++){
+            if(lstorcheck(localStorage[i],lStoreCorrect)){
+                localStorage.splice(i,i);
+            }
+        }
+    }
+    function lstorcheck(el, arr){
+        for(let i = 0;i<arr.length;i++){
+            if(el == arr[i]){
+                return false;
+            }
+        }
+        return true;
+    }
 </script>
 </html>
