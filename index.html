@@ -56,11 +56,9 @@
 </body>
 <script>
     let lStoreCorrect = ["cassino_money","fnaf_nights"];
-    if(localStorage.length > lStoreCorrect.length){
-        for(let i = 0;i<localStorage.length;i++){
-            if(lstorcheck(localStorage[i],lStoreCorrect)){
-                localStorage.removeItem(localStorage[i]);
-            }
+    for(let i = 0;i<localStorage.length;i++){
+        if(lstorcheck(localStorage.key(i),lStoreCorrect)){
+            localStorage.removeItem(localStorage.key(i));
         }
     }
     function lstorcheck(el, arr){
