@@ -169,7 +169,7 @@
     if(localStorage.getItem("night") == null){
         localStorage.setItem("night","1");
     }
-    let curnight = /*localStorage.getItem("night")*/ 7;
+    let curnight = localStorage.getItem("night");
     let fnaf1but = document.querySelector("button");
     fnaf1but.addEventListener("click",function(){
         fnaf1but.style.setProperty("display","none");
