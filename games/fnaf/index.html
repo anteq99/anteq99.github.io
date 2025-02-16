@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -52,9 +51,9 @@
             top: -50px;
             width: 100%;
             height: 50px;
-            background-color: white;
+            background-color: lightgray;
             opacity: 20%;
-            animation: goingdown 20s linear 3s infinite ;
+            animation: goingdown 20s linear 4s infinite ;
         }
         @keyframes goingdown{
             0%{top: -50px;}
@@ -91,30 +90,49 @@
             width: 204px;
             height: 34px;
             background-image: url(graphics/menu/continue.png);
+            display: flex;
+        }
+        #continuen{
+            background-image: url(graphics/menu/continuen.png);
+            width: 63px;
+            height: 22px;
+            margin-top: 40px;
+        }
+        #continuenumb{
+            width: 18px;
+            height: 18px;
+            margin: 40px 0 0 10px;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         #sixnight{
             width: 227px;
             height: 44px;
             background-image: url(graphics/menu/sixnight.png);
-            display: none;
         }
         #cnight{
             width: 306px;
             height: 44px;
             background-image: url(graphics/menu/cnight.png);
-            display: none;
         }
         #pointer{
             width: 43px;
             height: 26px;
             background-image: url(graphics/menu/pointer.png);
             margin-left: -75px;
+            margin-right: 32px;
         }
-
+        button{
+            margin: auto;
+            width: 100%;
+            font-size: 80vh;
+            background-color: black;
+            color: red;
+        }
     </style>
 </head>
 <body>
-<div id="warning"></div>
+    <button>PLAY</button>
 <div id="bg">
     <div id="static"></div>
     <div id="cmrglitch"></div>
@@ -123,48 +141,58 @@
         <div id="fnaf"></div>
         <div id="stars"></div>
         <section id="modes">
-        <div id="newgame"><div id="pointer"></div></div>
-        <div id="continue"></div>
-        <div id="sixnight"></div>
-        <div id="cnight"></div>
+            <div id="newgame"><section id="pointer"></section></div>
+            <div id="continue"></div>
         </section>
     </div>
 </div>
 
 <audio id="menutheme" src="sounds/darkness music.wav" loop></audio>
+<audio id="blip" src="sounds/blip.wav"></audio>
+<audio id="staticsound" src="sounds/static.wav"></audio>
 
 <script defer>
     let bg = document.querySelector("#bg");
-    let warning = document.querySelector("#warning"); 
+    let warning = document.createElement("div"); 
+    warning.id = "warning";
     let static = document.querySelector("#static"); 
     let cmrglitch = document.querySelector("#cmrglitch");
     let menu = document.querySelector("#menu");
     let menuName = document.querySelector("#fnaf");
     let stars = document.querySelector("#stars");
-    let modes = document.querySelector("#modes").querySelectorAll("div");
+    let modes = document.querySelector("#modes");
     // sounds
     let menuTheme = document.querySelector("#menutheme");
+    let blip = document.querySelector("#blip");
+    let staticSound = document.querySelector("#staticsound");
     // variables
     if(localStorage.getItem("night") == null){
         localStorage.setItem("night","1");
     }
-    let curnight = localStorage.getItem("night");
-    warning.style.setProperty("animation", "appear 5s")
+    let curnight = /*localStorage.getItem("night")*/ 7;
+    let fnaf1but = document.querySelector("button");
+    fnaf1but.addEventListener("click",function(){
+        fnaf1but.style.setProperty("display","none");
+        document.body.appendChild(warning);
+        warning.style.setProperty("animation", "appear 5s")
+    })
     function loading(){
     }
     warning.addEventListener("animationend",function(){
-        warning.style.setProperty("display","none");
+        document.body.removeChild(warning);
         bg.style.setProperty("display","block");
         if(curnight>=5){
             stars.style.setProperty("width",(70*(curnight-5))+"px");
         }
-        switch(curnight){
-            case 8:
-            case 7: document.querySelector("#cnight").style.setProperty("display","block");
-            case 6: document.querySelector("#sixnight").style.setProperty("display","block"); 
+        if(curnight>5){
+            let six = document.createElement("div"); six.id = "sixnight";modes.appendChild(six);
+            if(curnight>6){
+                let cn = document.createElement("div"); cn.id = "cnight";modes.appendChild(cn);
+            }
         }
         setTimeout(() => {
             mainmenu();
+            warning.removeEventListener("animationend",function(){});
         }, 2000);
     })
 
@@ -178,8 +206,8 @@
             menuhover();
             cmrglitches();
         }, 1000);
-        //menuTheme.load();
-        //menuTheme.play();
+        soundPlay(menuTheme);
+        soundPlay(staticSound);
     }
     function freddyAnim(){
         let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
@@ -195,40 +223,78 @@
                 bg.style.setProperty("background-image","url(graphics/menu/3a.png)");
                 setTimeout(() =>{
                     bg.style.setProperty("background-image","url(graphics/menu/3b.png)");
-                },100)
+                },50)
                 setTimeout(() =>{
                     bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-                },110)
+                },100)
             }
             setTimeout(() =>{
                 freddyAnim();
-            },parseInt(Math.random()*4000))
+            },parseInt(Math.random()*2000+1000))
         } 
     }
     function menuhover(){
-        for(let i = 0;i<modes.length;i++){
-            modes[i].addEventListener("mouseenter",function(){
+        let arr = modes.querySelectorAll("div");
+        let nght = document.createElement("section");
+        nght.id = "continuen";
+        let numb = document.createElement("section");
+        numb.id = "continuenumb";
+        for(let i = 0;i<arr.length;i++){
+            arr[i].addEventListener("mouseenter",function(){
                 let pointer = document.querySelector("#pointer");
-                modes[i].appendChild(pointer);
+                if(pointer.parentElement != arr[i]){
+                    soundPlay(blip);
+                }
+                arr[i].appendChild(pointer);
+                if(i == 1){
+                    arr[1].appendChild(nght);
+                    arr[1].appendChild(numb);
+                    if(curnight < 5){
+                        numb.style.setProperty("background-image",`url(graphics/numb/${curnight}.png)`);
+                    }
+                    else{
+                        numb.style.setProperty("background-image",`url(graphics/numb/5.png)`);
+                    }
+                }
+                else{
+                    if(arr[1].querySelector("#continuen")){
+                    arr[1].removeChild(nght);
+                    arr[1].removeChild(numb);
+                    }
+                }
+            });
+            arr[i].addEventListener("click",function(){
+                switch(i){
+                    case 0: console.log("1");break;
+                    case 1: console.log("2-5");break;
+                    case 2: console.log("6");break;
+                    case 3: console.log("CN");break;
+                }
             });
         }
     }
     function cmrglitches(){
         let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
         if(ifmenu){
-            let glitch = parseInt(Math.random()*40+1);
-            if(glitch <= 15){
-                cmrglitch.style.setProperty("background-image",`url(graphics/cmrglitch/${glitch}.png)`);
+            let glitch = parseInt(Math.random()*2);
+            let temp = parseInt(Math.random()*3);
+            if(!glitch){
+                cmrglitch.style.setProperty("background-image",`url(graphics/cmrglitch/${parseInt(Math.random()*11+1)}.png`);
             }
             else{
                 cmrglitch.style.setProperty("background-image",`none`);
             }
+            bg.style.setProperty("opacity",parseInt(Math.random()*51+50)+"%");
+            static.style.setProperty("opacity",parseInt(Math.random()*30+40)+"%");
             setTimeout(() =>{
                 cmrglitches();
-            },parseInt(Math.random()*200+300))
-        } 
+            },200)
+        }
+    }
+    function soundPlay(sound){
+        sound.load();
+        sound.play();
     }
 </script>
-
 </body>
 </html>
