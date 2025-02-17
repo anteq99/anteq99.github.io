@@ -17,7 +17,9 @@
             height: 100vh;
             background-color: black;
             background-size: cover;
-            display: none;
+            z-index: 0;
+            position: absolute;
+            top: 0px;
         }
         #warning{
             width: 465px;
@@ -25,6 +27,7 @@
             margin: 20% auto auto auto;
             background-image: url(graphics/warning.png);
             opacity: 0%;
+            animation: appear 5s;
         }
         @keyframes appear{
             0%{opacity: 0%;}
@@ -32,19 +35,23 @@
             100%{opacity: 0%;}
         }
         #static{
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-size: cover;
             background-image: url(graphics/static.gif);
             opacity: 0%;
+            position: absolute;
+            top: 0px;
+            z-index: 1;
         }
         #cmrglitch{
             position: absolute;
             top: 0px;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background-size: cover;
-            opacity: 0%;
+            opacity: 20%;
+            z-index: 2;
         }
         #glitchbar{
             position: absolute;
@@ -53,7 +60,8 @@
             height: 50px;
             background-color: lightgray;
             opacity: 20%;
-            animation: goingdown 20s linear 4s infinite ;
+            animation: goingdown 20s linear 0s infinite ;
+            z-index: 3;
         }
         @keyframes goingdown{
             0%{top: -50px;}
@@ -61,19 +69,18 @@
         }
         #menu{
             margin-left: 200px;
-            height: 100%;
+            height: 100vh;
             position: absolute;
             top: 0px;
-            display: none;
+            z-index: 4;
         }
-        #fnaf{
+        #menutitle{
             margin-top: 5vh;
             width: 201px;
             height: 212px;
             background-image: url(graphics/menu/name.png);
         }
         #stars{
-            width: 0px;
             height: 55px;
             background-image: url(graphics/menu/star.png);
             background-repeat: space;
@@ -128,40 +135,39 @@
             font-size: 80vh;
             background-color: black;
             color: red;
+            position: absolute;
+            z-index: 5;
         }
     </style>
 </head>
 <body>
-    <button>PLAY</button>
-<div id="bg">
-    <div id="menu">
-        <div id="fnaf"></div>
-        <div id="stars"></div>
-        <section id="modes">
-            <div id="newgame"><section id="pointer"></section></div>
-            <div id="continue"></div>
-        </section>
-    </div>
-    <div id="static"></div>
-    <div id="cmrglitch"></div>
-    <div id="glitchbar"></div>
+<button>PLAY</button>
+<div id="audio">
+    <audio id="menutheme" src="sounds/darkness music.wav" loop></audio>
+    <audio id="blip" src="sounds/blip.wav"></audio>
+    <audio id="staticsound" src="sounds/static.wav"></audio>
 </div>
 
-<audio id="menutheme" src="sounds/darkness music.wav" loop></audio>
-<audio id="blip" src="sounds/blip.wav"></audio>
-<audio id="staticsound" src="sounds/static.wav"></audio>
-
 <script defer>
-    let bg = document.querySelector("#bg");
-    let warning = document.createElement("div"); 
-    warning.id = "warning";
-    let static = document.querySelector("#static"); 
-    let cmrglitch = document.querySelector("#cmrglitch");
-    let menu = document.querySelector("#menu");
-    let menuName = document.querySelector("#fnaf");
-    let stars = document.querySelector("#stars");
-    let modes = document.querySelector("#modes");
+    // elements to create
+    let bg = document.createElement("div");bg.id = "bg";
+    let warning = document.createElement("div");warning.id = "warning";
+    let static = document.createElement("div");static.id = "static";
+    let cmrglitch = document.createElement("div");cmrglitch.id = "cmrglitch";
+    let glitchbar = document.createElement("div");glitchbar.id = "glitchbar";
+    let menu = document.createElement("div");menu.id = "menu";
+    let menuTitle = document.createElement("div");menuTitle.id = "menutitle";menu.appendChild(menuTitle);
+    let stars = document.createElement("div");stars.id = "stars";menu.appendChild(stars);
+    let modes = document.createElement("section");modes.id = "modes";menu.appendChild(modes);
+    let newgame = document.createElement("div");newgame.id = "newgame";modes.appendChild(newgame);
+    let contgame = document.createElement("div");contgame.id = "continue";modes.appendChild(contgame);
+    let sixnight = document.createElement("div"); sixnight.id = "sixnight";
+    let cnight = document.createElement("div"); cnight.id = "cnight";
+    let pointer = document.createElement("div"); pointer.id = "pointer";newgame.appendChild(pointer);
+    //created elements
+    let fnaf1but = document.querySelector("button");
     // sounds
+    let audioParent = document.querySelector("#audio")
     let menuTheme = document.querySelector("#menutheme");
     let blip = document.querySelector("#blip");
     let staticSound = document.querySelector("#staticsound");
@@ -169,48 +175,42 @@
     if(localStorage.getItem("night") == null){
         localStorage.setItem("night","1");
     }
-    let curnight = localStorage.getItem("night");
-    let fnaf1but = document.querySelector("button");
+    let curnight = /*localStorage.getItem("night")*/ 7;
     fnaf1but.addEventListener("click",function(){
-        fnaf1but.style.setProperty("display","none");
-        document.body.appendChild(warning);
-        warning.style.setProperty("animation", "appear 5s")
+        fnaf1but.remove();
+        warning.id = "warning";
+        document.body.insertBefore(warning,audioParent);
     })
-    function loading(){
-    }
     warning.addEventListener("animationend",function(){
-        document.body.removeChild(warning);
-        bg.style.setProperty("display","block");
-        if(curnight>=5){
-            stars.style.setProperty("width",(70*(curnight-5))+"px");
-        }
-        if(curnight>5){
-            let six = document.createElement("div"); six.id = "sixnight";modes.appendChild(six);
-            if(curnight>6){
-                let cn = document.createElement("div"); cn.id = "cnight";modes.appendChild(cn);
-            }
-        }
+        warning.remove();
         setTimeout(() => {
             mainmenu();
             warning.removeEventListener("animationend",function(){});
         }, 2000);
     })
-
     function mainmenu(){
-        setTimeout(() => {
-            bg.style.setProperty("background-image","url(graphics/menu/1.png)");
-            static.style.setProperty("opacity","50%");
-            menu.style.setProperty("display","block");
-            cmrglitch.style.setProperty("opacity","20%");
-            freddyAnim();
-            menuhover();
-            cmrglitches();
-        }, 1000);
         soundPlay(menuTheme);
         soundPlay(staticSound);
+        if(curnight>=5){
+            stars.style.setProperty("width",(70*(curnight-5))+"px");
+            modes.appendChild(sixnight);
+            if(curnight>6){
+                modes.appendChild(cnight);
+            }
+        }
+        document.body.insertBefore(bg,audioParent);
+        document.body.insertBefore(static,bg);
+        document.body.insertBefore(cmrglitch,static);
+        document.body.insertBefore(glitchbar,cmrglitch);
+        document.body.insertBefore(menu,glitchbar);
+        bg.style.setProperty("background-image","url(graphics/menu/1.png)");
+        static.style.setProperty("opacity","50%");
+        freddyAnim();
+        menuhover();
+        cmrglitches();
     }
     function freddyAnim(){
-        let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
+        let ifmenu = document.querySelector("#menu");
         if(ifmenu){
             let rand = parseInt(Math.random()*2);
             if(rand){
@@ -235,18 +235,14 @@
     }
     function menuhover(){
         let arr = modes.querySelectorAll("div");
-        let nght = document.createElement("section");
-        nght.id = "continuen";
-        let numb = document.createElement("section");
-        numb.id = "continuenumb";
+        let nght = document.createElement("section");nght.id = "continuen";
+        let numb = document.createElement("section");numb.id = "continuenumb";
         for(let i = 0;i<arr.length;i++){
             arr[i].addEventListener("mouseenter",function(){
-                let pointer = document.querySelector("#pointer");
                 if(pointer.parentElement != arr[i]){
                     soundPlay(blip);
-                }
-                arr[i].appendChild(pointer);
-                if(i == 1){
+                    arr[i].appendChild(pointer);
+                    if(i == 1){
                     arr[1].appendChild(nght);
                     arr[1].appendChild(numb);
                     if(curnight < 5){
@@ -262,6 +258,7 @@
                     arr[1].removeChild(numb);
                     }
                 }
+                }
             });
             arr[i].addEventListener("click",function(){
                 switch(i){
@@ -274,7 +271,7 @@
         }
     }
     function cmrglitches(){
-        let ifmenu = window.getComputedStyle(menu).getPropertyValue("display") == "block";
+        let ifmenu = document.querySelector("#menu")
         if(ifmenu){
             let glitch = parseInt(Math.random()*2);
             let temp = parseInt(Math.random()*3);
