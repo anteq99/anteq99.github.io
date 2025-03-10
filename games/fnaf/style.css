@@ -1,0 +1,219 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    overflow: hidden;
+}
+.bg{
+    margin: auto;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+}
+#warning{
+    width: 465px;
+    height: 124px;
+    margin: 20% auto auto auto;
+    background-image: url(graphics/warning.png);
+    opacity: 0%;
+    animation: appear 5s;
+}
+@keyframes appear{
+    0%{opacity: 0%;}
+    50%{opacity: 100%;}
+    100%{opacity: 0%;}
+}
+#static{
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-image: url(graphics/static.gif);
+    opacity: 0%;
+    position: absolute;
+    top: 0px;
+}
+#cmrglitch{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+}
+#glitchbar{
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    height: 50px;
+    background-color: lightgray;
+    opacity: 20%;
+    animation: goingdown 20s linear 0s infinite ;
+}
+@keyframes goingdown{
+    0%{top: -50px;}
+    100%{top: 100%}
+}
+#menu{
+    margin-left: 200px;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+}
+#menutitle{
+    margin-top: 5vh;
+    width: 201px;
+    height: 212px;
+    background-image: url(graphics/menu/name.png);
+}
+#stars{
+    height: 55px;
+    background-image: url(graphics/menu/star.png);
+    background-repeat: space;
+}
+#modes > div{
+    margin: 50px 0 50px 0;
+}
+#newgame{
+    width: 203px;
+    height: 33px;
+    background-image: url(graphics/menu/newgame.png);
+}
+#continue{
+    width: 204px;
+    height: 34px;
+    background-image: url(graphics/menu/continue.png);
+    display: flex;
+}
+#continuen{
+    background-image: url(graphics/menu/continuen.png);
+    width: 63px;
+    height: 22px;
+    margin-top: 40px;
+}
+#continuenumb{
+    width: 18px;
+    height: 18px;
+    margin: 40px 0 0 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#sixnight{
+    width: 227px;
+    height: 44px;
+    background-image: url(graphics/menu/sixnight.png);
+}
+#cnight{
+    width: 306px;
+    height: 44px;
+    background-image: url(graphics/menu/cnight.png);
+}
+#pointer{
+    width: 43px;
+    height: 26px;
+    background-image: url(graphics/menu/pointer.png);
+    margin-left: -75px;
+    margin-right: 32px;
+    display: block;
+}
+#nightshow{
+    width: 240px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 20% auto auto auto;
+    position: relative;
+}
+button{
+    margin: auto;
+    width: 100%;
+    font-size: 80vh;
+    background-color: black;
+    color: red;
+    position: absolute;
+}
+#cnightmenu{
+    width: 1000px;
+    height: 100%;
+    margin: auto;
+    position: relative;
+}
+#cnightmenu > div:first-child{
+    height: 500px;
+    background-image: url(graphics/start/cntitle.png);
+    background-size: cover;
+}
+#cnightmenu > div:nth-child(2){
+    height: 52px;
+    display: flex;
+}
+#cnightmenu > div:nth-child(2) > section{
+    width: 200px;
+    height: 52px;
+    margin-left: 40px;
+}
+.cnarrow{
+    width: 34px;
+    height: 52px;
+    margin: 0 16px 0 16px;
+}
+.cnnumb{
+    margin-top: 4.5px;
+    width: 43px;
+    height: 43px;
+}
+#cnightmenu > div:nth-child(3){
+    display: flex;
+    position: relative;
+}
+#cnready{
+    width: 186px;
+    height: 58px;
+    margin-top: 50px;
+    background-image: url(graphics/start/cnready.png);
+}
+#cnightmenu > div:nth-child(3) > div:first-child{
+    width: 800px;
+    height: 20px;
+    margin-top: 74px;
+    background-image: url(graphics/start/cnduperele.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
+#office{
+    height: 100vh;
+    width: 222vh;
+    position: absolute;
+}
+#officel{
+    width: 31.25%;
+    height: 100vh;
+    background-image: url(graphics/game/officel.png);
+    background-size: cover;
+    position:absolute;
+}
+#officem{
+    width: 37.5%;
+    height: 100vh;
+    background-image: url(graphics/game/Office.gif);
+    background-size: cover;
+    position:absolute;
+    left: 31.25%;
+}
+#officer{
+    width: 31.25%;
+    height: 100vh;
+    background-image: url(graphics/game/officer.png);
+    background-size: cover;
+    position:absolute;
+    right: 0%;
+}
+.look{
+    height: 100vh;
+    width: 30vw;
+    background-color: blue;
+    position: absolute;
+    opacity: 0%;
+}
