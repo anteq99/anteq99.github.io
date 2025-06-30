@@ -11,21 +11,28 @@
             margin:0;
             padding:0;
         }
+        main{
+            display:flex;
+        }
         div{
-            width: 100vh;
-            height: 100vh;
+            width: 50vh;
+            height: 50vh;
             background-size:cover;
             cursor: pointer;
-            margin: auto;
+            margin: 10vh;
         }
         #blackjack{
             background-image: url(graphics/blackjack.png);
+        }
+        #ghost{
+            background-image: url(graphics/ghost.png);
         }
     </style>
 </head>
 <body>
     <main>
         <div id="blackjack" onclick="window.open('blackjack')"></div>
+        <div id="ghost" onclick="window.open('ghost')"></div>
     </main>
 </body>
 </html>
