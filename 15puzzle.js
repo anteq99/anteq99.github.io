@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",function(){
     canvas.width = window.innerHeight
     canvas.height = window.innerHeight
     let c = canvas.getContext("2d");
-    let diagonal = parseInt(prompt("Jakie ma mieć wymiary? (1 liczba, najlepiej nie większa niż 6)"))
+    let diagonal = 4
     let board = []
     for(let i = 0;i<diagonal;i++){
         let temp = []
