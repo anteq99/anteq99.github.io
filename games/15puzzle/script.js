@@ -3,9 +3,22 @@ document.addEventListener("DOMContentLoaded",function(){
     canvas.width = window.innerHeight
     canvas.height = window.innerHeight
     let c = canvas.getContext("2d");
+    c.font = "100pt Arial"
+    c.fillText("ŁADOWANIE",0,(canvas.height)/2,canvas.width);
     let diagonal = 20
     let board = []
-    for(let i = 0;i<diagonal;i++){
+    if(localStorage.getItem("15puzzle") == null) newgame()
+    else {
+        localStorage.getItem("15puzzle").split("|").forEach(el=>{
+            let temp = []
+            el.split(";").forEach(e=>{
+                 temp.push(parseInt(e))
+            })
+            board.push(temp)
+        })
+    }
+    function newgame(){
+        for(let i = 0;i<diagonal;i++){
         let temp = []
         for(let j = 0;j<diagonal;j++){
             if(i != diagonal-1 || j!= diagonal-1){
@@ -18,22 +31,25 @@ document.addEventListener("DOMContentLoaded",function(){
         }
         board.push(temp)
     }
+    for(let i = 0;i<Math.pow(diagonal,4);i++)
+        move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
+        do{
+            move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
+        }while(board[diagonal-1][diagonal-1] != 0)
+    }
+    console.log(board)
     let img = new Image()
     img.onload = function(){
-        let proby = 1000
-        generate();
-        for(let i = 0;i<4000;i++)
-        move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
-        while(board[diagonal-1][diagonal-1] != 0){
-            move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
-            proby++
-        }
+        document.querySelector("#loading").remove()
+        generate()
     }
     img.src = "antoni_programista.png"
     canvas.addEventListener("click",(x)=>{
         move(event)
+        generate()
     })
     function generate(){
+        let temp = ""
         c.clearRect(0,0,canvas.width,canvas.height)
         for(let i = 0;i<diagonal;i++){
         for(let j = 0;j<diagonal;j++){
@@ -41,10 +57,20 @@ document.addEventListener("DOMContentLoaded",function(){
                 let xy = {x:(board[i][j]-1)%diagonal,y:parseInt((board[i][j]-1)/diagonal)}
                 c.drawImage(img,xy.x*img.width/diagonal,xy.y*img.height/diagonal,img.width/diagonal,img.height/diagonal,j*canvas.height*1/diagonal,i*canvas.height*1/diagonal,canvas.width*1/diagonal,canvas.height*1/diagonal)
                 c.font = `${canvas.height*0.25/diagonal}pt Arial`;
+                c.strokeStyle = "White"
+                c.strokeText(board[i][j],(j+0.25)*canvas.height*1/diagonal,canvas.height*1/diagonal*(i+0.625),canvas.width*0.5/diagonal);
                 c.fillText(board[i][j],(j+0.25)*canvas.height*1/diagonal,canvas.height*1/diagonal*(i+0.625),canvas.width*0.5/diagonal);
+                temp+=board[i][j]
             }
+            else{
+                temp+="0"
+            }
+            if(j!= diagonal-1) temp+=";"
         }
+        if(i!= diagonal-1) temp+="|"
+        localStorage.setItem("15puzzle",temp)
     }
+    console.log(temp.split("|"))
     }
     function move(x){
         let xy = {x:parseInt(x.offsetX/canvas.width*diagonal),y:parseInt(x.offsetY/canvas.height*diagonal)}
@@ -82,7 +108,6 @@ document.addEventListener("DOMContentLoaded",function(){
                     } 
                 }
             }
-            generate()
         }
     }
 })
