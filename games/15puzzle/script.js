@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",function(){
     canvas.width = window.innerHeight
     canvas.height = window.innerHeight
     let c = canvas.getContext("2d");
-    let diagonal = 4
+    let diagonal = 20
     let board = []
     for(let i = 0;i<diagonal;i++){
         let temp = []
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded",function(){
     img.onload = function(){
         let proby = 1000
         generate();
-        for(let i = 0;i<1000;i++)
+        for(let i = 0;i<4000;i++)
         move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
         while(board[diagonal-1][diagonal-1] != 0){
             move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded",function(){
         for(let j = 0;j<diagonal;j++){
             if(board[i][j] != 0){
                 let xy = {x:(board[i][j]-1)%diagonal,y:parseInt((board[i][j]-1)/diagonal)}
-                c.drawImage(img,xy.x*img.width/diagonal,xy.y*img.height/diagonal,img.width/diagonal,img.height/diagonal,j*canvas.height*1/diagonal,i*canvas.height*1/diagonal,canvas.height*1/diagonal,canvas.height*1/diagonal)
-                c.font = "20px Arial";
-                c.fillText(board[i][j],(j+0.5)*canvas.height*1/diagonal,(i+0.5)*canvas.height*1/diagonal);
+                c.drawImage(img,xy.x*img.width/diagonal,xy.y*img.height/diagonal,img.width/diagonal,img.height/diagonal,j*canvas.height*1/diagonal,i*canvas.height*1/diagonal,canvas.width*1/diagonal,canvas.height*1/diagonal)
+                c.font = `${canvas.height*0.25/diagonal}pt Arial`;
+                c.fillText(board[i][j],(j+0.25)*canvas.height*1/diagonal,canvas.height*1/diagonal*(i+0.625),canvas.width*0.5/diagonal);
             }
         }
     }
