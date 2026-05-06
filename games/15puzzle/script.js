@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded",function(){
     let c = canvas.getContext("2d");
     c.font = "100pt Arial"
     c.fillText("ŁADOWANIE",0,(canvas.height)/2,canvas.width);
-    let diagonal = 20
+    let diagonal = 6
     let board = []
     if(localStorage.getItem("15puzzle") == null) newgame()
-    else {
+    else {  
+        diagonal = localStorage.getItem("15puzzle").split("|").length
         localStorage.getItem("15puzzle").split("|").forEach(el=>{
             let temp = []
             el.split(";").forEach(e=>{
@@ -17,6 +18,20 @@ document.addEventListener("DOMContentLoaded",function(){
             board.push(temp)
         })
     }
+    let img = new Image()
+    img.onload = function(){
+        document.querySelector("#loading").remove()
+        generate()
+    }
+    img.src = "antoni_programista.png"
+    canvas.addEventListener("click",(x)=>{
+        move(event)
+        generate()
+        if(wincheck()){
+            alert("WYGRANA")
+            newgame()
+        }
+    })
     function newgame(){
         for(let i = 0;i<diagonal;i++){
         let temp = []
@@ -30,24 +45,14 @@ document.addEventListener("DOMContentLoaded",function(){
             }
         }
         board.push(temp)
-    }
-    for(let i = 0;i<Math.pow(diagonal,4);i++)
+        }
+        for(let i = 0;i<Math.pow(diagonal,4);i++)
         move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
         do{
             move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
         }while(board[diagonal-1][diagonal-1] != 0)
-    }
-    console.log(board)
-    let img = new Image()
-    img.onload = function(){
-        document.querySelector("#loading").remove()
         generate()
     }
-    img.src = "antoni_programista.png"
-    canvas.addEventListener("click",(x)=>{
-        move(event)
-        generate()
-    })
     function generate(){
         let temp = ""
         c.clearRect(0,0,canvas.width,canvas.height)
@@ -70,7 +75,6 @@ document.addEventListener("DOMContentLoaded",function(){
         if(i!= diagonal-1) temp+="|"
         localStorage.setItem("15puzzle",temp)
     }
-    console.log(temp.split("|"))
     }
     function move(x){
         let xy = {x:parseInt(x.offsetX/canvas.width*diagonal),y:parseInt(x.offsetY/canvas.height*diagonal)}
@@ -109,5 +113,17 @@ document.addEventListener("DOMContentLoaded",function(){
                 }
             }
         }
+    }
+    function wincheck(){
+        if(board[diagonal-1][diagonal-1] != 0) return false
+        let win = true
+        for(let i = 0;i<board.length;i++){
+            for(let j = 0;j<board.length;j++){
+                if(board[i][j] != diagonal*i+j+1 && board[i][j]!=board[diagonal-1][diagonal-1]) win = false
+                console.log(win)
+            }
+            
+        }
+        return win
     }
 })
