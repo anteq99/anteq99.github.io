@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(){
     let c = canvas.getContext("2d");
     c.font = "100pt Arial"
     c.fillText("ŁADOWANIE",0,(canvas.height)/2,canvas.width);
-    let diagonal = 20
+    let diagonal = 6
     let board = []
     if(localStorage.getItem("15puzzle") == null) newgame()
     else {  
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded",function(){
         if(wincheck()){
             alert("WYGRANA")
             newgame()
+            generate()
         }
     })
     function newgame(){
@@ -51,7 +52,6 @@ document.addEventListener("DOMContentLoaded",function(){
         do{
             move({offsetX:canvas.width*Math.random(),offsetY:canvas.height*Math.random()})
         }while(board[diagonal-1][diagonal-1] != 0)
-        generate()
     }
     function generate(){
         let temp = ""
