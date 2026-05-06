@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(){
     let c = canvas.getContext("2d");
     c.font = "100pt Arial"
     c.fillText("ŁADOWANIE",0,(canvas.height)/2,canvas.width);
-    let diagonal = 6
+    let diagonal = 20
     let board = []
     if(localStorage.getItem("15puzzle") == null) newgame()
     else {  
